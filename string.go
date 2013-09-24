@@ -48,21 +48,18 @@ func (self String) HasSuffix(prefix String) bool {
 
 func (self String) Index(other String) int {
 	for i := 0; i < self.Len(); i++ {
-		startOfSubstring := self.runes[i] == sub.runes[0]
-		if startOfSubstring {
-			continue
-		}
+		if self.runes[i] == other.runes[0] {
 
-		found := true
-		for j := 0; j < other.Len(); j++ {
-			substringInterrupted := self.Len() <= i+j || other.runes[j] != self.runes[i+j]
-			if substringInterrupted {
-				found = false
-				break
+			found := true
+			for j := 0; j < other.Len(); j++ {
+				if self.Len() <= i+j || other.runes[j] != self.runes[i+j] {
+					found = false
+					break
+				}
 			}
-		}
-		if found {
-			return i
+			if found {
+				return i
+			}
 		}
 	}
 	return -1
