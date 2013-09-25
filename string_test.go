@@ -134,5 +134,15 @@ func TestString(t *testing.T) {
 				So(value.Split(New("  ")), ShouldResemble, []String{New("Hello, 世界!")})
 			})
 		})
+
+		Convey("When the 'Sort' method is called on a []String", func() {
+			sort1 := Sort([]String{New("世界!"), New("Hello,")})
+			sort2 := Sort([]String{New("Def"), New("Dfi"), New("Abc")})
+
+			Convey("The resulting []String should be sorted lexicographically", func() {
+				So(sort1, ShouldResemble, []String{New("Hello,"), New("世界!")})
+				So(sort2, ShouldResemble, []String{New("Abc"), New("Def"), New("Dfi")})
+			})
+		})
 	})
 }

@@ -1,6 +1,7 @@
 package runicode
 
 import (
+	"sort"
 	"strings"
 )
 
@@ -130,4 +131,16 @@ func (self String) Split(sep String) []String {
 		results[i] = New(str)
 	}
 	return results
+}
+
+type stringSlice []String
+
+func (self stringSlice) Less(i, j int) bool { return self[i].stringValue < self[j].stringValue }
+func (self stringSlice) Len() int           { return len(self) }
+func (self stringSlice) Swap(i, j int)      { self[i], self[j] = self[j], self[i] }
+
+func Sort(strings []String) []String {
+	result := strings
+	sort.Sort(stringSlice(result))
+	return result
 }
