@@ -24,31 +24,21 @@ func Index(s String, sub string) int {
 	return s.Index(New(sub))
 }
 
-/*
-func Join(pieces []String) String {
-	result := ""
-	for i, piece := range pieces {
-		if i > 0 {
-			result += self.String()
-		}
-		result += piece.String()
-	}
-	return New(result)
+func Join(pieces []String, sep string) String {
+	return New(sep).Join(pieces)
 }
 
 // TODO: LastIndex()
 
-func Repeat(times int) String {
-	if times < 1 {
-		return New("")
-	}
-	return New(strings.Repeat(self.String(), times))
+func Repeat(s String, times int) String {
+	return s.Repeat(times)
 }
 
-func Replace(old, new String, limit int) String {
-	return New(strings.Replace(self.String(), old.String(), new.String(), limit))
+func Replace(s String, old, new String, limit int) String {
+	return s.Replace(old, new, limit)
 }
 
+/*
 func Split(sep String) []String {
 	return toRunicodeSlice(strings.Split(self.String(), sep.String()))
 }

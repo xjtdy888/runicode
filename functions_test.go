@@ -82,37 +82,37 @@ func TestRunicodePackageFunctions(t *testing.T) {
 				So(Index(value, ""), ShouldEqual, 0)
 			})
 		})
+
+		Convey("When a []String is joined by a concatenator String", func() {
+			pieces := []String{New("Hello"), New("世界!")}
+			sep := ", "
+
+			Convey("Each element in the []String is joined by the concatenator", func() {
+				So(Join(pieces, sep), shouldEqual, value)
+			})
+		})
+
+		Convey("When the 'Repeat' function is called with a count less than 1", func() {
+			Convey("It should return an empty String", func() {
+				So(Repeat(value, 0), shouldEqual, New(""))
+				So(Repeat(value, -1), shouldEqual, New(""))
+			})
+		})
+
+		Convey("When the 'Repeat' function is called with a count of at least 1", func() {
+			Convey("It should return that string repeated exactly that many times", func() {
+				So(Repeat(value, 3), shouldEqual, New("Hello, 世界!Hello, 世界!Hello, 世界!"))
+			})
+		})
+
+		Convey("When the 'Replace' function is called", func() {
+			Convey("Instances of the sub-String should be replaced", func() {
+				So(Replace(value, New("Hello"), New("Goodbye"), -1), shouldEqual, New("Goodbye, 世界!"))
+				So(Replace(value, New("Hello"), New("Goodbye"), 0), shouldEqual, New("Hello, 世界!"))
+				So(Replace(value, New("l"), New("y"), 1), shouldEqual, New("Heylo, 世界!"))
+			})
+		})
 		/*
-			Convey("When a []String is joined by a concatenator String", func() {
-				pieces := []String{New("Hello"), New("世界!")}
-				concatenator := New(", ")
-
-				Convey("Each element in the []String is joined by the concatenator", func() {
-					So(concatenator.Join(pieces), shouldEqual, value)
-				})
-			})
-
-			Convey("When the 'Repeat' function is called with a count less than 1", func() {
-				Convey("It should return an empty String", func() {
-					So(value.Repeat(0), shouldEqual, New(""))
-					So(value.Repeat(-1), shouldEqual, New(""))
-				})
-			})
-
-			Convey("When the 'Repeat' function is called with a count of at least 1", func() {
-				Convey("It should return that string repeated exactly that many times", func() {
-					So(value.Repeat(3), shouldEqual, New("Hello, 世界!Hello, 世界!Hello, 世界!"))
-				})
-			})
-
-			Convey("When the 'Replace' function is called", func() {
-				Convey("Instances of the sub-String should be replaced", func() {
-					So(value.Replace(New("Hello"), New("Goodbye"), -1), shouldEqual, New("Goodbye, 世界!"))
-					So(value.Replace(New("Hello"), New("Goodbye"), 0), shouldEqual, New("Hello, 世界!"))
-					So(value.Replace(New("l"), New("y"), 1), shouldEqual, New("Heylo, 世界!"))
-				})
-			})
-
 			Convey("When the 'Split' function is called", func() {
 				Convey("The String should be split into []String by a separator", func() {
 					So(value.Split(New(" ")), ShouldResemble, []String{New("Hello,"), New("世界!")})
