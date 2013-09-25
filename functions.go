@@ -34,15 +34,15 @@ func Repeat(s String, times int) String {
 	return s.Repeat(times)
 }
 
-func Replace(s String, old, new String, limit int) String {
-	return s.Replace(old, new, limit)
+func Replace(s String, old, new string, limit int) String {
+	return s.Replace(New(old), New(new), limit)
+}
+
+func Split(s String, sep string) []String {
+	return s.Split(New(sep))
 }
 
 /*
-func Split(sep String) []String {
-	return toRunicodeSlice(strings.Split(self.String(), sep.String()))
-}
-
 func SplitAfter(delim String) []String {
 	return toRunicodeSlice(strings.SplitAfter(self.String(), delim.String()))
 }

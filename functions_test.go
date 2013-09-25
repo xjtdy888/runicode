@@ -107,20 +107,20 @@ func TestRunicodePackageFunctions(t *testing.T) {
 
 		Convey("When the 'Replace' function is called", func() {
 			Convey("Instances of the sub-String should be replaced", func() {
-				So(Replace(value, New("Hello"), New("Goodbye"), -1), shouldEqual, New("Goodbye, 世界!"))
-				So(Replace(value, New("Hello"), New("Goodbye"), 0), shouldEqual, New("Hello, 世界!"))
-				So(Replace(value, New("l"), New("y"), 1), shouldEqual, New("Heylo, 世界!"))
+				So(Replace(value, "Hello", "Goodbye", -1), shouldEqual, New("Goodbye, 世界!"))
+				So(Replace(value, "Hello", "Goodbye", 0), shouldEqual, New("Hello, 世界!"))
+				So(Replace(value, "l", "y", 1), shouldEqual, New("Heylo, 世界!"))
+			})
+		})
+
+		Convey("When the 'Split' function is called", func() {
+			Convey("The String should be split into []String by a separator", func() {
+				So(Split(value, " "), ShouldResemble, []String{New("Hello,"), New("世界!")})
+				So(Split(value, ", "), ShouldResemble, []String{New("Hello"), New("世界!")})
+				So(Split(value, "  "), ShouldResemble, []String{New("Hello, 世界!")})
 			})
 		})
 		/*
-			Convey("When the 'Split' function is called", func() {
-				Convey("The String should be split into []String by a separator", func() {
-					So(value.Split(New(" ")), ShouldResemble, []String{New("Hello,"), New("世界!")})
-					So(value.Split(New(", ")), ShouldResemble, []String{New("Hello"), New("世界!")})
-					So(value.Split(New("  ")), ShouldResemble, []String{New("Hello, 世界!")})
-				})
-			})
-
 			Convey("When the 'SplitAfter' function is called", func() {
 				Convey("The String should be split into []String after each separator", func() {
 					So(value.SplitAfter(New(",")), ShouldResemble, []String{New("Hello,"), New(" 世界!")})
