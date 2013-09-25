@@ -120,85 +120,68 @@ func TestRunicodePackageFunctions(t *testing.T) {
 				So(Split(value, "  "), ShouldResemble, []String{New("Hello, 世界!")})
 			})
 		})
-		/*
-			Convey("When the 'SplitAfter' function is called", func() {
-				Convey("The String should be split into []String after each separator", func() {
-					So(value.SplitAfter(New(",")), ShouldResemble, []String{New("Hello,"), New(" 世界!")})
-					So(value.SplitAfter(New("界")), ShouldResemble, []String{New("Hello, 世界"), New("!")})
-				})
-			})
 
-			Convey("When the 'Sort' function is called on a []String", func() {
-				sort1 := Sort([]String{New("世界!"), New("Hello,")})
-				sort2 := Sort([]String{New("Def"), New("Dfi"), New("Abc")})
-
-				Convey("The resulting []String should be sorted lexicographically", func() {
-					So(sort1, ShouldResemble, []String{New("Hello,"), New("世界!")})
-					So(sort2, ShouldResemble, []String{New("Abc"), New("Def"), New("Dfi")})
-				})
+		Convey("When the 'SplitAfter' function is called", func() {
+			Convey("The String should be split into []String after each separator", func() {
+				So(SplitAfter(value, ","), ShouldResemble, []String{New("Hello,"), New(" 世界!")})
+				So(SplitAfter(value, "界"), ShouldResemble, []String{New("Hello, 世界"), New("!")})
 			})
+		})
 
-			Convey("When converting a String to title-case", func() {
-				Convey("The returned String should be title-cased (first letter of words capitalized)", func() {
-					So(New("hello, 世界!").Title(), shouldEqual, value)
-					So(New("テストtitle").Title(), shouldEqual, New("テストtitle"))
-					So(New("he llO, 世界!").Title(), shouldEqual, New("He LlO, 世界!"))
-				})
+		Convey("When the 'Title' function is called", func() {
+			Convey("The returned String should be title-cased (first letter of words capitalized)", func() {
+				So(Title("hello, 世界!"), shouldEqual, value)
+				So(Title("テストtitle"), shouldEqual, New("テストtitle"))
+				So(Title("he llO, 世界!"), shouldEqual, New("He LlO, 世界!"))
 			})
+		})
 
-			Convey("When converting all characters in a String to title-case", func() {
-				Convey("The resulting String should be all title-cased", func() {
-					So(New("hello, 世界!").ToTitle(), shouldEqual, New("HELLO, 世界!"))
-				})
+		Convey("When the 'ToTitle' function is called", func() {
+			Convey("The resulting String should be all title-cased", func() {
+				So(ToTitle("hello, 世界!"), shouldEqual, New("HELLO, 世界!"))
 			})
+		})
 
-			Convey("When converting a String to lower-case", func() {
-				Convey("The resulting String should be all lower-cased", func() {
-					So(value.ToLower(), shouldEqual, New("hello, 世界!"))
-				})
+		Convey("When the 'ToLower' function is called", func() {
+			Convey("The resulting String should be all lower-cased", func() {
+				So(ToLower("HELLO, 世界!"), shouldEqual, New("hello, 世界!"))
 			})
+		})
 
-			Convey("When converting a String to upper-case", func() {
-				Convey("The resulting String should be all upper-cased", func() {
-					So(value.ToUpper(), shouldEqual, New("HELLO, 世界!"))
-				})
+		Convey("When the 'ToUpper' function is called", func() {
+			Convey("The resulting String should be all upper-cased", func() {
+				So(ToUpper("hello, 世界!"), shouldEqual, New("HELLO, 世界!"))
 			})
+		})
 
-			Convey("When trimming a String of certain characters", func() {
-				Convey("Those characters should be removed from both ends of the string", func() {
-					So(value.Trim(New("H界!")), shouldEqual, New("ello, 世"))
-				})
-				Convey("And trimming only from the left, trimming should only happen on the left", func() {
-					So(value.TrimLeft(New("H界!")), shouldEqual, New("ello, 世界!"))
-				})
-				Convey("And trimming only from the right, trimming should only happen on the right", func() {
-					So(value.TrimRight(New("H界!")), shouldEqual, New("Hello, 世"))
-				})
+		Convey("When trimming a String of certain characters", func() {
+			Convey("Those characters should be removed from both ends of the string", func() {
+				So(Trim(value, "H界!"), shouldEqual, New("ello, 世"))
 			})
+			Convey("And trimming only from the left, trimming should only happen on the left", func() {
+				So(TrimLeft(value, "H界!"), shouldEqual, New("ello, 世界!"))
+			})
+			Convey("And trimming only from the right, trimming should only happen on the right", func() {
+				So(TrimRight(value, "H界!"), shouldEqual, New("Hello, 世"))
+			})
+		})
 
-			Convey("When trimming a prefix from a String", func() {
-				Convey("If the string has the prefix, it should be stripped", func() {
-					So(value.TrimPrefix(New("Hello, ")), shouldEqual, New("世界!"))
-				})
-				Convey("If the string does NOT has the prefix, it should not be changed", func() {
-					So(value.TrimPrefix(New("世界!")), shouldEqual, value)
-				})
+		Convey("When trimming a prefix from a String", func() {
+			Convey("If the string has the prefix, it should be stripped", func() {
+				So(TrimPrefix(value, "Hello, "), shouldEqual, New("世界!"))
 			})
+			Convey("If the string does NOT has the prefix, it should not be changed", func() {
+				So(TrimPrefix(value, "世界!"), shouldEqual, value)
+			})
+		})
 
-			Convey("When trimming a String of white space on both ends", func() {
-				Convey("The String should have white space removed on both ends", func() {
-					So(New("  Oh hai wurld 	 	").TrimSpace(), shouldEqual, New("Oh hai wurld"))
-				})
+		Convey("When trimming a suffix from a String", func() {
+			Convey("If the string has the suffix, it should be stripped", func() {
+				So(TrimSuffix(value, "世界!"), shouldEqual, New("Hello, "))
 			})
-
-			Convey("When trimming a suffix from a String", func() {
-				Convey("If the string has the suffix, it should be stripped", func() {
-					So(value.TrimSuffix(New("世界!")), shouldEqual, New("Hello, "))
-				})
-				Convey("If the string does NOT has the suffix, it should not be changed", func() {
-					So(value.TrimSuffix(New("Hello,")), shouldEqual, value)
-				})
+			Convey("If the string does NOT has the suffix, it should not be changed", func() {
+				So(TrimSuffix(value, "Hello,"), shouldEqual, value)
 			})
-		*/
+		})
 	})
 }

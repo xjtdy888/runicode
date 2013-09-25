@@ -42,69 +42,42 @@ func Split(s String, sep string) []String {
 	return s.Split(New(sep))
 }
 
-/*
-func SplitAfter(delim String) []String {
-	return toRunicodeSlice(strings.SplitAfter(self.String(), delim.String()))
+func SplitAfter(s String, delim string) []String {
+	return s.SplitAfter(New(delim))
 }
 
-func Title() String {
-	// TODO ... from strings.Split() in the Go documentation:
-	// "BUG: The rule Title uses for word boundaries does not handle Unicode punctuation properly."
-	return New(strings.Title(self.String()))
+func Title(s string) String {
+	return New(s).Title()
 }
 
-func ToTitle() String {
-	return New(strings.ToTitle(self.String()))
+func ToTitle(s string) String {
+	return New(s).ToTitle()
 }
 
-func ToLower() String {
-	return New(strings.ToLower(self.String()))
+func ToLower(s string) String {
+	return New(s).ToLower()
 }
 
-func ToUpper() String {
-	return New(strings.ToUpper(self.String()))
+func ToUpper(s string) String {
+	return New(s).ToUpper()
 }
 
-func Trim(cutset String) String {
-	return New(strings.Trim(self.String(), cutset.String()))
+func Trim(s String, cutset string) String {
+	return s.Trim(New(cutset))
 }
 
-func TrimPrefix(prefix String) String {
-	return New(strings.TrimPrefix(self.String(), prefix.String()))
+func TrimPrefix(s String, prefix string) String {
+	return s.TrimPrefix(New(prefix))
 }
 
-func TrimSuffix(suffix String) String {
-	return New(strings.TrimSuffix(self.String(), suffix.String()))
+func TrimSuffix(s String, suffix string) String {
+	return s.TrimSuffix(New(suffix))
 }
 
-func TrimLeft(cutset String) String {
-	return New(strings.TrimLeft(self.String(), cutset.String()))
+func TrimLeft(s String, cutset string) String {
+	return s.TrimLeft(New(cutset))
 }
 
-func TrimRight(cutset String) String {
-	return New(strings.TrimRight(self.String(), cutset.String()))
+func TrimRight(s String, cutset string) String {
+	return s.TrimRight(New(cutset))
 }
-
-func TrimSpace() String {
-	return New(strings.TrimSpace(self.String()))
-}
-
-func toRunicodeSlice(s []string) []String {
-	result := make([]String, len(s))
-	for i, str := range s {
-		result[i] = New(str)
-	}
-	return result
-}
-
-type stringSlice []String
-
-func (self stringSlice) Less(i, j int) bool { return self[i].stringValue < self[j].stringValue }
-func (self stringSlice) Len() int           { return len(self) }
-func (self stringSlice) Swap(i, j int)      { self[i], self[j] = self[j], self[i] }
-
-func Sort(strings []String) []String {
-	result := strings
-	sort.Sort(stringSlice(result))
-	return result
-}*/
