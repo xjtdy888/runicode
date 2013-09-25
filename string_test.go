@@ -88,5 +88,14 @@ func TestString(t *testing.T) {
 				So(value.HasSuffix(New("Hello")), ShouldBeFalse)
 			})
 		})
+
+		Convey("When a []String is joined by a concatenator String", func() {
+			pieces := []String{New("Hello"), New("世界!")}
+			concatenator := New(", ")
+
+			Convey("Each element in the []String is joined by the concatenator", func() {
+				So(concatenator.Join(pieces).String(), ShouldEqual, value.String())
+			})
+		})
 	})
 }

@@ -64,3 +64,14 @@ func (self String) Index(other String) int {
 	}
 	return -1
 }
+
+func (self String) Join(pieces []String) String {
+	result := ""
+	for i, piece := range pieces {
+		if i > 0 {
+			result += self.stringValue
+		}
+		result += piece.String()
+	}
+	return New(result)
+}
