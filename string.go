@@ -125,12 +125,19 @@ func (self String) Replace(old, new String, limit int) String {
 }
 
 func (self String) Split(sep String) []String {
-	rawResults := strings.Split(self.String(), sep.String())
-	results := make([]String, len(rawResults))
-	for i, str := range rawResults {
-		results[i] = New(str)
+	return toRunicodeSlice(strings.Split(self.String(), sep.String()))
+}
+
+func (self String) SplitAfter(delim String) []String {
+	return toRunicodeSlice(strings.SplitAfter(self.String(), delim.String()))
+}
+
+func toRunicodeSlice(s []string) []String {
+	result := make([]String, len(s))
+	for i, str := range s {
+		result[i] = New(str)
 	}
-	return results
+	return result
 }
 
 type stringSlice []String

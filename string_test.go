@@ -135,6 +135,13 @@ func TestString(t *testing.T) {
 			})
 		})
 
+		Convey("When the 'SplitAfter' method is called", func() {
+			Convey("The String should be split into []String after each separator", func() {
+				So(value.SplitAfter(New(",")), ShouldResemble, []String{New("Hello,"), New(" 世界!")})
+				So(value.SplitAfter(New("界")), ShouldResemble, []String{New("Hello, 世界"), New("!")})
+			})
+		})
+
 		Convey("When the 'Sort' method is called on a []String", func() {
 			sort1 := Sort([]String{New("世界!"), New("Hello,")})
 			sort2 := Sort([]String{New("Def"), New("Dfi"), New("Abc")})
