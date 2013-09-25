@@ -48,56 +48,68 @@ func (self String) HasSuffix(prefix String) bool {
 }
 
 func (self String) Index(other String) int {
+	///////////////////////////////////
+	//// Optimized Implementation: ////
+	///////////////////////////////////
 
-	/*
-		TODO -- Look into using array splices like here: http://golang.org/src/pkg/strings/strings.go?s=3598:3631#L161
+	// inspiration: http://golang.org/src/pkg/strings/strings.go?s=3598:3631#L161
 
-
-		switch {
-		case other.Len() == 0:
-			return 0
-		case other.Len() == 1:
-			for i := 0; i < self.Len(); i++ {
-				if self.runes[i] == other.runes[0] {
-					return i
-				}
-			}
-			return -1
-		case self.Len() == other.Len():
-			if self.String() == other.String() {
-				return 0
-			}
-			return -1
-		case other.Len() > self.Len():
-			return -1
-		default:
-			for i := 0; i < self.Len()-other.Len(); i++ {
-				if self.runes[i] == other.runes[0] && self.runes[i:i+other.Len()] == other {
-					return i
-				}
-			}
-		}*/
-
-	if other.Len() == 0 {
+	switch {
+	case other.Len() == 0:
 		return 0
-	}
-
-	for i := 0; i < self.Len(); i++ {
-		if self.runes[i] == other.runes[0] {
-
+	case other.Len() == 1:
+		for i := 0; i < self.Len(); i++ {
+			if self.runes[i] == other.runes[0] {
+				return i
+			}
+		}
+		return -1
+	case self.Len() == other.Len():
+		if self.String() == other.String() {
+			return 0
+		}
+		return -1
+	case other.Len() > self.Len():
+		return -1
+	default:
+		for i := 0; i <= self.Len()-other.Len(); i++ {
 			found := true
 			for j := 0; j < other.Len(); j++ {
-				if self.Len() <= i+j || other.runes[j] != self.runes[i+j] {
+				if self.runes[i+j] != other.runes[j] {
 					found = false
-					break
 				}
 			}
 			if found {
 				return i
 			}
 		}
+		return -1
 	}
-	return -1
+
+	//////////////////////////////////
+	//// Previous Implementation: ////
+	//////////////////////////////////
+
+	// if other.Len() == 0 {
+	// 	return 0
+	// }
+
+	// for i := 0; i < self.Len(); i++ {
+	// 	if self.runes[i] == other.runes[0] {
+
+	// 		found := true
+	// 		for j := 0; j < other.Len(); j++ {
+	// 			if self.Len() <= i+j || other.runes[j] != self.runes[i+j] {
+	// 				found = false
+	// 				break
+	// 			}
+	// 		}
+	// 		if found {
+	// 			return i
+	// 		}
+	// 	}
+	// }
+	// return -1
 }
 
 func (self String) Join(pieces []String) String {

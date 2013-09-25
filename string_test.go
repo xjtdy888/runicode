@@ -33,6 +33,7 @@ func TestString(t *testing.T) {
 			})
 
 			Convey("The 'Index' method should return the first correct 0-based character position", func() {
+				So(value.Index(New("")), ShouldEqual, 0)
 				So(value.Index(New("llo,")), ShouldEqual, 2)
 				So(value.Index(New(" ")), ShouldEqual, 6)
 				So(value.Index(New("世")), ShouldEqual, 7)
