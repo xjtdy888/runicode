@@ -150,6 +150,22 @@ func (self String) ToUpper() String {
 	return New(strings.ToUpper(self.String()))
 }
 
+func (self String) Trim(cutset String) String {
+	return New(strings.Trim(self.String(), cutset.String()))
+}
+
+func (self String) TrimPrefix(prefix String) String {
+	return New(strings.TrimPrefix(self.String(), prefix.String()))
+}
+
+func (self String) TrimLeft(cutset String) String {
+	return New(strings.TrimLeft(self.String(), cutset.String()))
+}
+
+func (self String) TrimRight(cutset String) String {
+	return New(strings.TrimRight(self.String(), cutset.String()))
+}
+
 func toRunicodeSlice(s []string) []String {
 	result := make([]String, len(s))
 	for i, str := range s {

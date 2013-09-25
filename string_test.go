@@ -177,5 +177,26 @@ func TestString(t *testing.T) {
 				So(value.ToUpper().String(), ShouldEqual, "HELLO, 世界!")
 			})
 		})
+
+		Convey("When trimming a String of certain characters", func() {
+			Convey("Those characters should be removed from both ends of the string", func() {
+				So(value.Trim(New("H界!")).String(), ShouldEqual, "ello, 世")
+			})
+			Convey("And trimming only from the left, trimming should only happen on the left", func() {
+				So(value.TrimLeft(New("H界!")).String(), ShouldEqual, "ello, 世界!")
+			})
+			Convey("And trimming only from the right, trimming should only happen on the right", func() {
+				So(value.TrimRight(New("H界!")).String(), ShouldEqual, "Hello, 世")
+			})
+		})
+
+		Convey("When trimming a prefix from a String", func() {
+			Convey("If the string has the prefix, it should be stripped", func() {
+				So(value.TrimPrefix(New("Hello, ")).String(), ShouldEqual, "世界!")
+			})
+			Convey("If the string does NOT has the prefix, it should not be changed", func() {
+				So(value.TrimPrefix(New("世界!")).String(), ShouldEqual, value.String())
+			})
+		})
 	})
 }
