@@ -15,6 +15,7 @@ func TestString(t *testing.T) {
 
 		Convey("String input with Unicode should yield same output", func() {
 			So(value.String(), ShouldEqual, input)
+			So(value.runes, ShouldResemble, []rune(input))
 		})
 
 		Convey("The 'Len' method should return the correct length (character count)", func() {
@@ -102,28 +103,28 @@ func TestString(t *testing.T) {
 			concatenator := New(", ")
 
 			Convey("Each element in the []String is joined by the concatenator", func() {
-				So(concatenator.Join(pieces).String(), ShouldEqual, value.String())
+				So(concatenator.Join(pieces), shouldEqual, value)
 			})
 		})
 
 		Convey("When the 'Repeat' method is called with a count less than 1", func() {
 			Convey("It should return an empty String", func() {
-				So(value.Repeat(0).String(), ShouldEqual, "")
-				So(value.Repeat(-1).String(), ShouldEqual, "") // TODO: strings.Repeat() panics but not because of a direct bounds check; should we let ours panic naturally too?
+				So(value.Repeat(0), shouldEqual, New(""))
+				So(value.Repeat(-1), shouldEqual, New("")) // TODO: strings.Repeat() panics but not because of a direct bounds check; should we let ours panic naturally too?
 			})
 		})
 
 		Convey("When the 'Repeat' method is called with a count of at least 1", func() {
 			Convey("It should return that string repeated exactly that many times", func() {
-				So(value.Repeat(3).String(), ShouldEqual, "Hello, 世界!Hello, 世界!Hello, 世界!")
+				So(value.Repeat(3), shouldEqual, New("Hello, 世界!Hello, 世界!Hello, 世界!"))
 			})
 		})
 
 		Convey("When the 'Replace' method is called", func() {
 			Convey("Instances of the sub-String should be replaced", func() {
-				So(value.Replace(New("Hello"), New("Goodbye"), -1).String(), ShouldEqual, "Goodbye, 世界!")
-				So(value.Replace(New("Hello"), New("Goodbye"), 0).String(), ShouldEqual, "Hello, 世界!")
-				So(value.Replace(New("l"), New("y"), 1).String(), ShouldEqual, "Heylo, 世界!")
+				So(value.Replace(New("Hello"), New("Goodbye"), -1), shouldEqual, New("Goodbye, 世界!"))
+				So(value.Replace(New("Hello"), New("Goodbye"), 0), shouldEqual, New("Hello, 世界!"))
+				So(value.Replace(New("l"), New("y"), 1), shouldEqual, New("Heylo, 世界!"))
 			})
 		})
 
@@ -154,64 +155,70 @@ func TestString(t *testing.T) {
 
 		Convey("When converting a String to title-case", func() {
 			Convey("The returned String should be title-cased (first letter of words capitalized)", func() {
-				So(New("hello, 世界!").Title().String(), ShouldEqual, value.String())
-				So(New("テストtitle").Title().String(), ShouldEqual, "テストtitle")
-				So(New("he llO, 世界!").Title().String(), ShouldEqual, "He LlO, 世界!")
+				So(New("hello, 世界!").Title(), shouldEqual, value)
+				So(New("テストtitle").Title(), shouldEqual, New("テストtitle"))
+				So(New("he llO, 世界!").Title(), shouldEqual, New("He LlO, 世界!"))
 			})
 		})
 
 		Convey("When converting all characters in a String to title-case", func() {
 			Convey("The resulting String should be all title-cased", func() {
-				So(New("hello, 世界!").ToTitle().String(), ShouldEqual, "HELLO, 世界!")
+				So(New("hello, 世界!").ToTitle(), shouldEqual, New("HELLO, 世界!"))
 			})
 		})
 
 		Convey("When converting a String to lower-case", func() {
 			Convey("The resulting String should be all lower-cased", func() {
-				So(value.ToLower().String(), ShouldEqual, "hello, 世界!")
+				So(value.ToLower(), shouldEqual, New("hello, 世界!"))
 			})
 		})
 
 		Convey("When converting a String to upper-case", func() {
 			Convey("The resulting String should be all upper-cased", func() {
-				So(value.ToUpper().String(), ShouldEqual, "HELLO, 世界!")
+				So(value.ToUpper(), shouldEqual, New("HELLO, 世界!"))
 			})
 		})
 
 		Convey("When trimming a String of certain characters", func() {
 			Convey("Those characters should be removed from both ends of the string", func() {
-				So(value.Trim(New("H界!")).String(), ShouldEqual, "ello, 世")
+				So(value.Trim(New("H界!")), shouldEqual, New("ello, 世"))
 			})
 			Convey("And trimming only from the left, trimming should only happen on the left", func() {
-				So(value.TrimLeft(New("H界!")).String(), ShouldEqual, "ello, 世界!")
+				So(value.TrimLeft(New("H界!")), shouldEqual, New("ello, 世界!"))
 			})
 			Convey("And trimming only from the right, trimming should only happen on the right", func() {
-				So(value.TrimRight(New("H界!")).String(), ShouldEqual, "Hello, 世")
+				So(value.TrimRight(New("H界!")), shouldEqual, New("Hello, 世"))
 			})
 		})
 
 		Convey("When trimming a prefix from a String", func() {
 			Convey("If the string has the prefix, it should be stripped", func() {
-				So(value.TrimPrefix(New("Hello, ")).String(), ShouldEqual, "世界!")
+				So(value.TrimPrefix(New("Hello, ")), shouldEqual, New("世界!"))
 			})
 			Convey("If the string does NOT has the prefix, it should not be changed", func() {
-				So(value.TrimPrefix(New("世界!")).String(), ShouldEqual, value.String())
+				So(value.TrimPrefix(New("世界!")), shouldEqual, value)
 			})
 		})
 
 		Convey("When trimming a String of white space on both ends", func() {
 			Convey("The String should have white space removed on both ends", func() {
-				So(New("  Oh hai wurld 	 	").TrimSpace().String(), ShouldEqual, "Oh hai wurld")
+				So(New("  Oh hai wurld 	 	").TrimSpace(), shouldEqual, New("Oh hai wurld"))
 			})
 		})
 
 		Convey("When trimming a suffix from a String", func() {
 			Convey("If the string has the suffix, it should be stripped", func() {
-				So(value.TrimSuffix(New("世界!")).String(), ShouldEqual, "Hello, ")
+				So(value.TrimSuffix(New("世界!")), shouldEqual, New("Hello, "))
 			})
 			Convey("If the string does NOT has the suffix, it should not be changed", func() {
-				So(value.TrimSuffix(New("Hello,")).String(), ShouldEqual, value.String())
+				So(value.TrimSuffix(New("Hello,")), shouldEqual, value)
 			})
 		})
 	})
+}
+
+func shouldEqual(actual interface{}, expected ...interface{}) string {
+	a := actual.(String).String()
+	e := expected[0].(String).String()
+	return ShouldEqual(a, e)
 }
