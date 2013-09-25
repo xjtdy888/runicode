@@ -158,12 +158,20 @@ func (self String) TrimPrefix(prefix String) String {
 	return New(strings.TrimPrefix(self.String(), prefix.String()))
 }
 
+func (self String) TrimSuffix(suffix String) String {
+	return New(strings.TrimSuffix(self.String(), suffix.String()))
+}
+
 func (self String) TrimLeft(cutset String) String {
 	return New(strings.TrimLeft(self.String(), cutset.String()))
 }
 
 func (self String) TrimRight(cutset String) String {
 	return New(strings.TrimRight(self.String(), cutset.String()))
+}
+
+func (self String) TrimSpace() String {
+	return New(strings.TrimSpace(self.String()))
 }
 
 func toRunicodeSlice(s []string) []String {

@@ -198,5 +198,20 @@ func TestString(t *testing.T) {
 				So(value.TrimPrefix(New("世界!")).String(), ShouldEqual, value.String())
 			})
 		})
+
+		Convey("When trimming a String of white space on both ends", func() {
+			Convey("The String should have white space removed on both ends", func() {
+				So(New("  Oh hai wurld 	 	").TrimSpace().String(), ShouldEqual, "Oh hai wurld")
+			})
+		})
+
+		Convey("When trimming a suffix from a String", func() {
+			Convey("If the string has the suffix, it should be stripped", func() {
+				So(value.TrimSuffix(New("世界!")).String(), ShouldEqual, "Hello, ")
+			})
+			Convey("If the string does NOT has the suffix, it should not be changed", func() {
+				So(value.TrimSuffix(New("Hello,")).String(), ShouldEqual, value.String())
+			})
+		})
 	})
 }
