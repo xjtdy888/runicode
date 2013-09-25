@@ -126,5 +126,13 @@ func TestString(t *testing.T) {
 				So(value.Replace(New("l"), New("y"), 1).String(), ShouldEqual, "Heylo, 世界!")
 			})
 		})
+
+		Convey("When the 'Split' method is called", func() {
+			Convey("The String should be split into []String by a separator", func() {
+				So(value.Split(New(" ")), ShouldResemble, []String{New("Hello,"), New("世界!")})
+				So(value.Split(New(", ")), ShouldResemble, []String{New("Hello"), New("世界!")})
+				So(value.Split(New("  ")), ShouldResemble, []String{New("Hello, 世界!")})
+			})
+		})
 	})
 }

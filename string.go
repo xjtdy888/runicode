@@ -22,15 +22,15 @@ func (self String) Len() int {
 }
 
 func (self String) Contains(sub String) bool {
-	return strings.Contains(self.stringValue, sub.String())
+	return strings.Contains(self.String(), sub.String())
 }
 
 func (self String) Count(sub String) int {
-	return strings.Count(self.stringValue, sub.String())
+	return strings.Count(self.String(), sub.String())
 }
 
 func (self String) Fields() []String {
-	rawFields := strings.Fields(self.stringValue)
+	rawFields := strings.Fields(self.String())
 	fields := []String{}
 	for _, field := range rawFields {
 		fields = append(fields, New(field))
@@ -39,11 +39,11 @@ func (self String) Fields() []String {
 }
 
 func (self String) HasPrefix(prefix String) bool {
-	return strings.HasPrefix(self.stringValue, prefix.String())
+	return strings.HasPrefix(self.String(), prefix.String())
 }
 
 func (self String) HasSuffix(prefix String) bool {
-	return strings.HasSuffix(self.stringValue, prefix.String())
+	return strings.HasSuffix(self.String(), prefix.String())
 }
 
 func (self String) Index(other String) int {
@@ -63,7 +63,7 @@ func (self String) Index(other String) int {
 			}
 			return -1
 		case self.Len() == other.Len():
-			if self.stringValue == other.stringValue {
+			if self.String() == other.String() {
 				return 0
 			}
 			return -1
@@ -103,7 +103,7 @@ func (self String) Join(pieces []String) String {
 	result := ""
 	for i, piece := range pieces {
 		if i > 0 {
-			result += self.stringValue
+			result += self.String()
 		}
 		result += piece.String()
 	}
@@ -116,9 +116,18 @@ func (self String) Repeat(times int) String {
 	if times < 1 {
 		return New("")
 	}
-	return New(strings.Repeat(self.stringValue, times))
+	return New(strings.Repeat(self.String(), times))
 }
 
 func (self String) Replace(old, new String, limit int) String {
-	return New(strings.Replace(self.stringValue, old.stringValue, new.stringValue, limit))
+	return New(strings.Replace(self.String(), old.String(), new.String(), limit))
+}
+
+func (self String) Split(sep String) []String {
+	rawResults := strings.Split(self.String(), sep.String())
+	results := make([]String, len(rawResults))
+	for i, str := range rawResults {
+		results[i] = New(str)
+	}
+	return results
 }
