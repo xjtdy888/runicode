@@ -132,6 +132,20 @@ func (self String) SplitAfter(delim String) []String {
 	return toRunicodeSlice(strings.SplitAfter(self.String(), delim.String()))
 }
 
+func (self String) Title() String {
+	// TODO ... from strings.Split() in the Go documentation:
+	// "BUG: The rule Title uses for word boundaries does not handle Unicode punctuation properly."
+	return New(strings.Title(self.String()))
+}
+
+func (self String) ToTitle() String {
+	return New(strings.ToTitle(self.String()))
+}
+
+func (self String) ToLower() String {
+	return New(strings.ToLower(self.String()))
+}
+
 func toRunicodeSlice(s []string) []String {
 	result := make([]String, len(s))
 	for i, str := range s {

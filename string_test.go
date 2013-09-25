@@ -151,5 +151,25 @@ func TestString(t *testing.T) {
 				So(sort2, ShouldResemble, []String{New("Abc"), New("Def"), New("Dfi")})
 			})
 		})
+
+		Convey("When converting a String to title-case", func() {
+			Convey("The returned String should be title-cased (first letter of words capitalized)", func() {
+				So(New("hello, 世界!").Title().String(), ShouldEqual, value.String())
+				So(New("テストtitle").Title().String(), ShouldEqual, "テストtitle")
+				So(New("he llO, 世界!").Title().String(), ShouldEqual, "He LlO, 世界!")
+			})
+		})
+
+		Convey("When converting all characters in a String to title-case", func() {
+			Convey("The resulting String should be all title-cased", func() {
+				So(New("hello, 世界!").ToTitle().String(), ShouldEqual, "HELLO, 世界!")
+			})
+		})
+
+		Convey("When converting a String to lower-case", func() {
+			Convey("The resulting String should be all lower-cased", func() {
+				So(value.ToLower().String(), ShouldEqual, "hello, 世界!")
+			})
+		})
 	})
 }
