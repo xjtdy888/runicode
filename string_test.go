@@ -22,19 +22,11 @@ func TestString(t *testing.T) {
 			So(value.Len(), ShouldEqual, 10)
 		})
 
-		Convey("When a String contains a sub-String", func() {
+		Convey("When a String contains a certain sub-String", func() {
 			Convey("The 'Contains' method should return true", func() {
 				So(value.Contains(New("界!")), ShouldBeTrue)
 			})
-		})
 
-		Convey("When a String does NOT contain a sub-String", func() {
-			Convey("The 'Contains' method should return false", func() {
-				So(value.Contains(New("!界")), ShouldBeFalse)
-			})
-		})
-
-		Convey("When a String contains a certain sub-String", func() {
 			Convey("The 'Count' method should return the number of non-overlapping occurrences", func() {
 				So(value.Count(New("l")), ShouldEqual, 2)
 				So(value.Count(New("世")), ShouldEqual, 1)
@@ -50,6 +42,10 @@ func TestString(t *testing.T) {
 		})
 
 		Convey("When a String does NOT contain occurrences of a sub-String", func() {
+			Convey("The 'Contains' method should return false", func() {
+				So(value.Contains(New("!界")), ShouldBeFalse)
+			})
+
 			Convey("The 'Count' method should return 0", func() {
 				So(value.Count(New("Blah")), ShouldEqual, 0)
 				So(value.Count(New("ቷቪ")), ShouldEqual, 0)
