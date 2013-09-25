@@ -47,6 +47,40 @@ func (self String) HasSuffix(prefix String) bool {
 }
 
 func (self String) Index(other String) int {
+
+	/*
+		TODO -- Look into using array splices like here: http://golang.org/src/pkg/strings/strings.go?s=3598:3631#L161
+
+
+		switch {
+		case other.Len() == 0:
+			return 0
+		case other.Len() == 1:
+			for i := 0; i < self.Len(); i++ {
+				if self.runes[i] == other.runes[0] {
+					return i
+				}
+			}
+			return -1
+		case self.Len() == other.Len():
+			if self.stringValue == other.stringValue {
+				return 0
+			}
+			return -1
+		case other.Len() > self.Len():
+			return -1
+		default:
+			for i := 0; i < self.Len()-other.Len(); i++ {
+				if self.runes[i] == other.runes[0] && self.runes[i:i+other.Len()] == other {
+					return i
+				}
+			}
+		}*/
+
+	if other.Len() == 0 {
+		return 0
+	}
+
 	for i := 0; i < self.Len(); i++ {
 		if self.runes[i] == other.runes[0] {
 
@@ -74,4 +108,17 @@ func (self String) Join(pieces []String) String {
 		result += piece.String()
 	}
 	return New(result)
+}
+
+// TODO: LastIndex()
+
+func (self String) Repeat(times int) String {
+	if times < 1 {
+		return New("")
+	}
+	return New(strings.Repeat(self.stringValue, times))
+}
+
+func (self String) Replace(old, new String, limit int) String {
+	return New(strings.Replace(self.stringValue, old.stringValue, new.stringValue, limit))
 }

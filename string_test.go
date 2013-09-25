@@ -89,12 +89,41 @@ func TestString(t *testing.T) {
 			})
 		})
 
+		Convey("When the 'Index' method is called with an empty sub-String", func() {
+			Convey("It should return an index of 0", func() {
+				So(value.Index(New("")), ShouldEqual, 0)
+			})
+		})
+
+		// TODO: Custom GoConvey assertion so we don't have to compare Strings manually
+
 		Convey("When a []String is joined by a concatenator String", func() {
 			pieces := []String{New("Hello"), New("世界!")}
 			concatenator := New(", ")
 
 			Convey("Each element in the []String is joined by the concatenator", func() {
 				So(concatenator.Join(pieces).String(), ShouldEqual, value.String())
+			})
+		})
+
+		Convey("When the 'Repeat' method is called with a count less than 1", func() {
+			Convey("It should return an empty String", func() {
+				So(value.Repeat(0).String(), ShouldEqual, "")
+				So(value.Repeat(-1).String(), ShouldEqual, "") // TODO: strings.Repeat() panics but not because of a direct bounds check; should we let ours panic naturally too?
+			})
+		})
+
+		Convey("When the 'Repeat' method is called with a count of at least 1", func() {
+			Convey("It should return that string repeated exactly that many times", func() {
+				So(value.Repeat(3).String(), ShouldEqual, "Hello, 世界!Hello, 世界!Hello, 世界!")
+			})
+		})
+
+		Convey("When the 'Replace' method is called", func() {
+			Convey("Instances of the sub-String should be replaced", func() {
+				So(value.Replace(New("Hello"), New("Goodbye"), -1).String(), ShouldEqual, "Goodbye, 世界!")
+				So(value.Replace(New("Hello"), New("Goodbye"), 0).String(), ShouldEqual, "Hello, 世界!")
+				So(value.Replace(New("l"), New("y"), 1).String(), ShouldEqual, "Heylo, 世界!")
 			})
 		})
 	})
