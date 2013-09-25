@@ -146,6 +146,10 @@ func (self String) ToLower() String {
 	return New(strings.ToLower(self.String()))
 }
 
+func (self String) ToUpper() String {
+	return New(strings.ToUpper(self.String()))
+}
+
 func toRunicodeSlice(s []string) []String {
 	result := make([]String, len(s))
 	for i, str := range s {

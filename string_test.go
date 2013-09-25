@@ -171,5 +171,11 @@ func TestString(t *testing.T) {
 				So(value.ToLower().String(), ShouldEqual, "hello, 世界!")
 			})
 		})
+
+		Convey("When converting a String to upper-case", func() {
+			Convey("The resulting String should be all upper-cased", func() {
+				So(value.ToUpper().String(), ShouldEqual, "HELLO, 世界!")
+			})
+		})
 	})
 }
