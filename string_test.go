@@ -96,8 +96,6 @@ func TestString(t *testing.T) {
 			})
 		})
 
-		// TODO: Custom GoConvey assertion so we don't have to compare Strings manually
-
 		Convey("When a []String is joined by a concatenator String", func() {
 			pieces := []String{New("Hello"), New("世界!")}
 			concatenator := New(", ")
@@ -110,7 +108,7 @@ func TestString(t *testing.T) {
 		Convey("When the 'Repeat' method is called with a count less than 1", func() {
 			Convey("It should return an empty String", func() {
 				So(value.Repeat(0), shouldEqual, New(""))
-				So(value.Repeat(-1), shouldEqual, New("")) // TODO: strings.Repeat() panics but not because of a direct bounds check; should we let ours panic naturally too?
+				So(value.Repeat(-1), shouldEqual, New(""))
 			})
 		})
 
