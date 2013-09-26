@@ -5,21 +5,26 @@ import (
 	"strings"
 )
 
-type String struct {
-	runes       []rune
-	stringValue string
-}
+// Initially, we defined String to be of type struct { []rune, string }
+// so the conversion to a string only had to happen once and could be
+// stored. That was more efficient since nearly every method we implement
+// uses the strings package. However, we found that it was valuable to
+// preserve functionality with Go's builtin features for slices.
+// If you need highly-optimized performance for *very* large strings,
+// this package may not be for you. (Or you could fork it and use the struct.)
+
+type String []rune
 
 func New(input string) String {
-	return String{[]rune(input), input}
+	return String(input)
 }
 
-func (self String) String() string {
-	return self.stringValue
+func (this String) String() string {
+	return string(this)
 }
 
-func (self String) Len() int {
-	return len(self.runes)
+func (this String) Len() int {
+	return len(this)
 }
 
 func (self String) Contains(sub String) bool {
@@ -48,18 +53,12 @@ func (self String) HasSuffix(prefix String) bool {
 }
 
 func (self String) Index(other String) int {
-	///////////////////////////////////
-	//// Optimized Implementation: ////
-	///////////////////////////////////
-
-	// inspiration: http://golang.org/src/pkg/strings/strings.go?s=3598:3631#L161
-
 	switch {
 	case other.Len() == 0:
 		return 0
 	case other.Len() == 1:
 		for i := 0; i < self.Len(); i++ {
-			if self.runes[i] == other.runes[0] {
+			if self[i] == other[0] {
 				return i
 			}
 		}
@@ -75,7 +74,7 @@ func (self String) Index(other String) int {
 		for i := 0; i <= self.Len()-other.Len(); i++ {
 			found := true
 			for j := 0; j < other.Len(); j++ {
-				if self.runes[i+j] != other.runes[j] {
+				if self[i+j] != other[j] {
 					found = false
 				}
 			}
@@ -85,31 +84,6 @@ func (self String) Index(other String) int {
 		}
 		return -1
 	}
-
-	//////////////////////////////////
-	//// Previous Implementation: ////
-	//////////////////////////////////
-
-	// if other.Len() == 0 {
-	// 	return 0
-	// }
-
-	// for i := 0; i < self.Len(); i++ {
-	// 	if self.runes[i] == other.runes[0] {
-
-	// 		found := true
-	// 		for j := 0; j < other.Len(); j++ {
-	// 			if self.Len() <= i+j || other.runes[j] != self.runes[i+j] {
-	// 				found = false
-	// 				break
-	// 			}
-	// 		}
-	// 		if found {
-	// 			return i
-	// 		}
-	// 	}
-	// }
-	// return -1
 }
 
 func (self String) Join(pieces []String) String {
@@ -122,8 +96,6 @@ func (self String) Join(pieces []String) String {
 	}
 	return New(result)
 }
-
-// TODO: LastIndex()
 
 func (self String) Repeat(times int) String {
 	if times < 1 {
@@ -145,7 +117,7 @@ func (self String) SplitAfter(delim String) []String {
 }
 
 func (self String) Title() String {
-	// TODO ... from strings.Split() in the Go documentation:
+	// From strings.Split() in the Go documentation:
 	// "BUG: The rule Title uses for word boundaries does not handle Unicode punctuation properly."
 	return New(strings.Title(self.String()))
 }
@@ -196,7 +168,7 @@ func toRunicodeSlice(s []string) []String {
 
 type stringSlice []String
 
-func (self stringSlice) Less(i, j int) bool { return self[i].stringValue < self[j].stringValue }
+func (self stringSlice) Less(i, j int) bool { return self[i].String() < self[j].String() }
 func (self stringSlice) Len() int           { return len(self) }
 func (self stringSlice) Swap(i, j int)      { self[i], self[j] = self[j], self[i] }
 

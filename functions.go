@@ -28,8 +28,6 @@ func Join(pieces []String, sep string) String {
 	return New(sep).Join(pieces)
 }
 
-// TODO: LastIndex()
-
 func Repeat(s String, times int) String {
 	return s.Repeat(times)
 }

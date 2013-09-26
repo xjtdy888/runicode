@@ -88,28 +88,28 @@ func TestRunicodePackageFunctions(t *testing.T) {
 			sep := ", "
 
 			Convey("Each element in the []String is joined by the concatenator", func() {
-				So(Join(pieces, sep), shouldEqual, value)
+				So(Join(pieces, sep), ShouldResemble, value)
 			})
 		})
 
 		Convey("When the 'Repeat' function is called with a count less than 1", func() {
 			Convey("It should return an empty String", func() {
-				So(Repeat(value, 0), shouldEqual, New(""))
-				So(Repeat(value, -1), shouldEqual, New(""))
+				So(Repeat(value, 0), ShouldResemble, New(""))
+				So(Repeat(value, -1), ShouldResemble, New(""))
 			})
 		})
 
 		Convey("When the 'Repeat' function is called with a count of at least 1", func() {
 			Convey("It should return that string repeated exactly that many times", func() {
-				So(Repeat(value, 3), shouldEqual, New("Hello, 世界!Hello, 世界!Hello, 世界!"))
+				So(Repeat(value, 3), ShouldResemble, New("Hello, 世界!Hello, 世界!Hello, 世界!"))
 			})
 		})
 
 		Convey("When the 'Replace' function is called", func() {
 			Convey("Instances of the sub-String should be replaced", func() {
-				So(Replace(value, "Hello", "Goodbye", -1), shouldEqual, New("Goodbye, 世界!"))
-				So(Replace(value, "Hello", "Goodbye", 0), shouldEqual, New("Hello, 世界!"))
-				So(Replace(value, "l", "y", 1), shouldEqual, New("Heylo, 世界!"))
+				So(Replace(value, "Hello", "Goodbye", -1), ShouldResemble, New("Goodbye, 世界!"))
+				So(Replace(value, "Hello", "Goodbye", 0), ShouldResemble, New("Hello, 世界!"))
+				So(Replace(value, "l", "y", 1), ShouldResemble, New("Heylo, 世界!"))
 			})
 		})
 
@@ -130,57 +130,57 @@ func TestRunicodePackageFunctions(t *testing.T) {
 
 		Convey("When the 'Title' function is called", func() {
 			Convey("The returned String should be title-cased (first letter of words capitalized)", func() {
-				So(Title("hello, 世界!"), shouldEqual, value)
-				So(Title("テストtitle"), shouldEqual, New("テストtitle"))
-				So(Title("he llO, 世界!"), shouldEqual, New("He LlO, 世界!"))
+				So(Title("hello, 世界!"), ShouldResemble, value)
+				So(Title("テストtitle"), ShouldResemble, New("テストtitle"))
+				So(Title("he llO, 世界!"), ShouldResemble, New("He LlO, 世界!"))
 			})
 		})
 
 		Convey("When the 'ToTitle' function is called", func() {
 			Convey("The resulting String should be all title-cased", func() {
-				So(ToTitle("hello, 世界!"), shouldEqual, New("HELLO, 世界!"))
+				So(ToTitle("hello, 世界!"), ShouldResemble, New("HELLO, 世界!"))
 			})
 		})
 
 		Convey("When the 'ToLower' function is called", func() {
 			Convey("The resulting String should be all lower-cased", func() {
-				So(ToLower("HELLO, 世界!"), shouldEqual, New("hello, 世界!"))
+				So(ToLower("HELLO, 世界!"), ShouldResemble, New("hello, 世界!"))
 			})
 		})
 
 		Convey("When the 'ToUpper' function is called", func() {
 			Convey("The resulting String should be all upper-cased", func() {
-				So(ToUpper("hello, 世界!"), shouldEqual, New("HELLO, 世界!"))
+				So(ToUpper("hello, 世界!"), ShouldResemble, New("HELLO, 世界!"))
 			})
 		})
 
 		Convey("When trimming a String of certain characters", func() {
 			Convey("Those characters should be removed from both ends of the string", func() {
-				So(Trim(value, "H界!"), shouldEqual, New("ello, 世"))
+				So(Trim(value, "H界!"), ShouldResemble, New("ello, 世"))
 			})
 			Convey("And trimming only from the left, trimming should only happen on the left", func() {
-				So(TrimLeft(value, "H界!"), shouldEqual, New("ello, 世界!"))
+				So(TrimLeft(value, "H界!"), ShouldResemble, New("ello, 世界!"))
 			})
 			Convey("And trimming only from the right, trimming should only happen on the right", func() {
-				So(TrimRight(value, "H界!"), shouldEqual, New("Hello, 世"))
+				So(TrimRight(value, "H界!"), ShouldResemble, New("Hello, 世"))
 			})
 		})
 
 		Convey("When trimming a prefix from a String", func() {
 			Convey("If the string has the prefix, it should be stripped", func() {
-				So(TrimPrefix(value, "Hello, "), shouldEqual, New("世界!"))
+				So(TrimPrefix(value, "Hello, "), ShouldResemble, New("世界!"))
 			})
 			Convey("If the string does NOT has the prefix, it should not be changed", func() {
-				So(TrimPrefix(value, "世界!"), shouldEqual, value)
+				So(TrimPrefix(value, "世界!"), ShouldResemble, value)
 			})
 		})
 
 		Convey("When trimming a suffix from a String", func() {
 			Convey("If the string has the suffix, it should be stripped", func() {
-				So(TrimSuffix(value, "世界!"), shouldEqual, New("Hello, "))
+				So(TrimSuffix(value, "世界!"), ShouldResemble, New("Hello, "))
 			})
 			Convey("If the string does NOT has the suffix, it should not be changed", func() {
-				So(TrimSuffix(value, "Hello,"), shouldEqual, value)
+				So(TrimSuffix(value, "Hello,"), ShouldResemble, value)
 			})
 		})
 	})
