@@ -27,13 +27,13 @@ import "github.com/smartystreets/runicode"
 Then:
 
 ```go
-str := runicode.New("My string here")  // runicode.String, which is []rune under the hood
+str := runicode.New("My string")  // runicode.String, which is []rune under the hood
 ```
 
 Or if you prefer to cast instead:
 
 ```go
-str := runicode.String("My string here")  // runicode.New() does this for you anyway
+str := runicode.String("My string")  // runicode.New() does this for you anyway
 ```
 
 Some more:
@@ -57,13 +57,13 @@ sorted := runicode.Sort(sortable)
 
 // Most common functions from the strings package are available as methods
 padded := runicode.New("  Woah too much whitespace	")
-padded = padded.TrimSpace()   // Runicode strings are immutable
-padded = padded.ToUpper()     // Each method/function call will return a different instance
+padded = padded.TrimSpace() // Runicode strings are immutable
+padded = padded.ToUpper()   // Methods/functions return a different instance
 
 // If you prefer to use string literals, call the package funtions instead
-runicode.HasSuffix(runi, "界!")
-runicode.Split(runi, ", ")
-runicode.Replace(runi, "Hello,", "Goodbye,")
+suffixed := runicode.HasSuffix(runi, "界!")
+words    := runicode.Split(runi, ", ")
+さようなら := runicode.Replace(runi, "Hello,", "Goodbye,")
 ```
 
 Please feel free to fork and contribute to this simple project.
