@@ -3,6 +3,7 @@ package runicode
 import (
 	"sort"
 	"strings"
+	"strconv"
 )
 
 // Initially, we defined String to be of type struct { []rune, string }
@@ -21,6 +22,10 @@ func New(input string) String {
 
 func (this String) String() string {
 	return string(this)
+}
+
+func (this String) MarshalJSON() ([]byte, error) {
+	return []byte(strconv.QuoteToASCII(string(this))), nil
 }
 
 func (this String) Len() int {
