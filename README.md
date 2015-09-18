@@ -1,3 +1,7 @@
+### 说明
+1. 该版本克隆自 github.com/smartystreets/runicode
+2. 增加JSON unicode编码支持(\uxxxx\uxxx)
+
 runicode
 ========
 
@@ -10,7 +14,7 @@ Installation
 
 Just the usual:
 
-    $ go get github.com/smartystreets/runicode
+    $ go get github.com/xjtdy888/runicode
 
 
 
@@ -21,7 +25,7 @@ Usage
 First:
 
 ```go
-import "github.com/smartystreets/runicode"
+import "github.com/xjtdy888/runicode"
 ```
 
 Then:
