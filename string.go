@@ -25,7 +25,9 @@ func (this String) String() string {
 }
 
 func (this String) MarshalJSON() ([]byte, error) {
-	return []byte(strconv.QuoteToASCII(string(this))), nil
+	qs := strconv.QuoteToASCII(string(this))
+	qs = strings.Replace(qs, `\x`, `\u00`,-1)
+	return []byte(qs), nil
 }
 
 func (this String) Len() int {
